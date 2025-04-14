@@ -3,10 +3,31 @@ public class FunWithThreads2 {
 
     //Constructor of FunWithThreads
     public FunWithThreads2(){
-        System.out.println("MAIN START");
+
         
-        System.out.println("MAIN END");
+        
+        Thread t1 = new Thread(new MyThread("Thread 1"));
+        System.out.println("MAIN Thread START");
+        t1.start();
+        
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+        e.printStackTrace();
     }
+
+    Thread t2 = new Thread(new MyThread("Thread 2"));
+    t2.start();
+
+    try {
+        t1.join();
+    } catch (InterruptedException e) {
+        e.printStackTrace();
+    }
+
+        System.out.println("MAIN Thread END");
+    }
+
 
     public static void main(String[] args) throws Exception {
         
@@ -14,7 +35,27 @@ public class FunWithThreads2 {
 
     }
 
-
+    class MyThread implements Runnable{
+        
+        private String name="";
+        public MyThread(String name){
+            this.name = name;
+        }
+        @Override
+        public void run() {
+            for(int i=0;i<10;i++){
+                System.out.println(this.name + " " + i);    
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+                
+            }
+        }
+       
+    }
 }
 
 /*
@@ -46,3 +87,5 @@ Thread 2 8
 Thread 2 9
 Thread end:Thread 2
  */
+
+
