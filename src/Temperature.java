@@ -19,7 +19,19 @@ public class Temperature {
         TemperatureScale f2C = null;
 
         // Delete from here
-       
+
+
+        
+         f2C = new TemperatureScale() {
+            
+            @Override
+            public double convert(double temperature) {
+                return (temperature - 32) / 1.8;
+
+            }
+            
+        };
+
 
         
         // to here
@@ -38,6 +50,8 @@ public class Temperature {
         TemperatureScale c2F = null;
 
         // Delete from here
+
+        c2F = n -> (n*1.8) +32;
        
         // to here
 
@@ -62,6 +76,15 @@ public class Temperature {
             //    store result in celciusTemps
         // Delete from here
        
+        for(double t : temps){
+            fahrenheitTemps.add(c2F.convert(t));
+            celsiusTemps.add(f2C.convert(t));
+        }
+
+        System.out.println(fahrenheitTemps);
+        System.out.println(celsiusTemps);
+        
+        
 
         // to here
 
@@ -70,7 +93,9 @@ public class Temperature {
         // elements of fahrenheitTemps that are *above* feezing (32F)
         // Delete from here
       
-       
+        fahrenheitTemps.stream()
+                .filter(n -> n>32.0)
+                .forEach(n -> System.out.println(n));
       
         // to here
 
@@ -79,9 +104,13 @@ public class Temperature {
         // elements of celsiusTemps that are *below* freezing (0C)
         // Delete from here
       
-    
+        celsiusTemps.stream()
+                .filter(n -> n < 0)
+                .forEach(System.out::println);
       
         // to here
     }
+    
+
     
 }
